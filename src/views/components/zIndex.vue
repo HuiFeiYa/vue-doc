@@ -1,7 +1,8 @@
 <script setup>
 </script>
 <template>
-  <div>
+    <!-- 父元素设置 transform 等修改叠层上下文的，会影响子元素的 position：fixed 的布局 -->
+  <div style="transform: rotate(30deg);">
     <h1>产生“层叠上下文”</h1>
     <h2>普通元素设置position属性为非static值并设置z-index属性为具体数值</h2>
     <div style="display: flex;">
@@ -28,6 +29,8 @@
             </div>
         </div>
     </div>
+
+    <div style="width:50px;height: 50px;background-color: burlywood;position: fixed;top: 200px;left: 200px;"></div>
   </div>
 </template>
 <style>
