@@ -1,7 +1,8 @@
 <script setup>
+import zIndex from './components/zIndex.vue';
 </script>
 <template>
   <div>
-    model
+    <zIndex />
   </div>
 </template>

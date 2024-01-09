@@ -10,7 +10,7 @@ const routes = computed(()=> {
 </script>
 
 <template>
-  <div id="app">
+  <div>
     <p>
         <!--使用 router-link 组件进行导航 -->
         <!--通过传递 `to` 来指定链接 -->
