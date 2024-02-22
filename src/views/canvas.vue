@@ -32,7 +32,9 @@ const loadImage = (e) => {
     height.value = offsetHeight
     ctx.clearRect(0,0,offsetWidth, offsetHeight)
     // ctx.drawImage(img.value, 0,0, offsetWidth, offsetHeight)
-    ctx.drawImage(img.value, 0,0, dw,dh)
+    // ctx.drawImage(img.value, 0,0, dw,dh-60)
+
+    ctx.drawImage(img.value, 0,0, dw,dh, 0,0,100,100)
 }
 
 

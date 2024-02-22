@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            /* canvas 宽高是 2:1 否则图片会变形 */
+            /* 设置了 canvas 的 css 大小后，canvas 会被拉伸 */
+            /* width: 600px;
+            height: 300px; */
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <!-- <img style="width: 300px" src="./2.png" alt=""> -->
+    <img style="width: 300px;height: 227px;" src="../src/assets/河马.png" alt="">
+    
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas')
+        const dpr = window.devicePixelRatio || 1;
+        console.log('dpr:',dpr)
+        canvas.style.width = '300px'
+        canvas.style.height = '300px'
+        canvas.width = 300 * dpr;
+        canvas.height = 300 * dpr;
+        const ctx = canvas.getContext('2d')
+        ctx.scale(dpr, dpr);
+        const img = new Image()
+        // img.src = './2.png'
+        img.src='../src/assets/河马.png'
+        img.onload = function() {
+            console.log('load img',img.width, img.height)
+            // 图片太大，还是只能绘制一部分
+            // ctx.drawImage(img, 0,0, img.width, img.height)
+            // 将图片按比例缩小
+            const rate = 1
+            ctx.drawImage(img, 0,0, img.width/rate, img.height/rate)
+        }
+    </script>
+</body>
+</html>
