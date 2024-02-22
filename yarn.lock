@@ -335,6 +335,11 @@ fsevents@~2.3.2, fsevents@~2.3.3:
   resolved "https://registry.npmmirror.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
+gifshotjs-miniprogram@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/gifshotjs-miniprogram/-/gifshotjs-miniprogram-1.0.0.tgz#311c5ac26193630f9ba2efbb90a173e3b1e9c145"
+  integrity sha512-cm1HJBTKPOZ0TaIqlPjoFqHhekdvb/IPPLr8oz8ifqEsCQYd7q/LRYlbGIV4DmungvHdxcsaSFwsZpDacChHBg==
+
 magic-string@^0.30.5:
   version "0.30.5"
   resolved "https://registry.npmmirror.com/magic-string/-/magic-string-0.30.5.tgz#1994d980bd1c8835dc6e78db7cbd4ae4f24746f9"
