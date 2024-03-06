@@ -20,7 +20,9 @@ const routes = computed(()=> {
           <router-link  :to="'/'+routePath" exact-active-class="router-link-active">{{ routePath }}</router-link>
         </div>
       </p>
-      <router-view></router-view>
+      <div style="text-align: center;">
+        <router-view></router-view>
+      </div>
   </div>
 
 </template>
