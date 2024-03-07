@@ -34,10 +34,7 @@
   </div>
 </template>
 <style>
-p {
-    width: 100px;
-    height: 100px;
-}
+
 .mt20 {
     margin-top: 40px;
 }
