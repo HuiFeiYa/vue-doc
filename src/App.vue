@@ -11,7 +11,7 @@ const routes = computed(()=> {
 
 <template>
   <div>
-    <p>
+      <div style="user-select: none;">
         <!--使用 router-link 组件进行导航 -->
         <!--通过传递 `to` 来指定链接 -->
         <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
@@ -19,8 +19,8 @@ const routes = computed(()=> {
 
           <router-link  :to="'/'+routePath" exact-active-class="router-link-active">{{ routePath }}</router-link>
         </div>
-      </p>
-      <div style="text-align: center;">
+      </div>
+      <div >
         <router-view></router-view>
       </div>
   </div>

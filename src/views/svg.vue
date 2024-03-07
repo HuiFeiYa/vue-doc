@@ -5,6 +5,14 @@
     <!-- <svg width="200" height="200" viewBox="0 0 50 50">
         <circle cx="0" cy="0" r="50" ></circle>
     </svg> -->
+    <p>part4</p>
+    <svg width="200" height="200" viewBox="0 0 200 200">
+        <polygon points="100,20 180,50 180,150 20,150 20,50 100,20"  stroke="black" stroke-width="2" fill="none"></polygon>
+        <line x1="100" y1="15" x2="20" y2="45" stroke-width="10" stroke="#d1495b" stroke-linecap="round"></line>
+        <line x1="100" y1="15" x2="180" y2="45" stroke-width="10" stroke="#d1495b" stroke-linecap="round"></line>
+        <circle cx="100" cy="40" r="14" fill="#fdea96" stroke="black"></circle>
+        <line  x1="86" y1="40" x2="114" y2="40" stroke="black"  ></line>
+    </svg>
     <p>part3</p>
     <svg width="200" height="200" viewBox="0 0 200 200">
         <circle cx="100" cy="40" r="30" fill="#cd803d" />
