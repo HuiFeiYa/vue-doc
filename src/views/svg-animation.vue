@@ -13,6 +13,9 @@ const previewPath = ref('')
 
 // 交互层展示
 const isShowControl = ref(false)
+const isLineMousedown = ref(false)
+const isControlMousedown = ref(false)
+const controlIndex = ref(-1)
 // 新增控制点
 const controlPoint = ref< Point| null>(null)
 const InDistance = 5; // 距离小于等于5认为在线内
@@ -41,6 +44,7 @@ const handleLine = (e) => {
     previewPoints.value = cloneDeep(points.value)
     const i = getSegmentIndex(points.value, {x: offsetX, y: offsetY})
     segmentIndex.value = i
+    isLineMousedown.value = true
 }
 
 const handleWrapperClick = () => {
@@ -84,37 +88,49 @@ const getSegmentIndex = (list, point) => {
     }
 }
 
+const handleControlMousedown = (e, index) => {
+    e.stopPropagation()
+    isShowControl.value = true
+    isControlMousedown.value = true
+    controlIndex.value = index
+}
 const handleMousemove = (e) => {
     const { clientX, clientY, offsetX, offsetY} = e
-    if (isShowControl.value && controlPoint.value) {
-        // 判断控制点在那条线段上
-        console.log('i-----------',segmentIndex.value)
-        const i = segmentIndex.value;
-        if (i === -1) return 
-        if (!isInsert.value) {
-            previewPoints.value.splice(i, 0, {
-                x: offsetX,
-                y: offsetY
-            })
-            isInsert.value = true
-        } else {
-            const target = previewPoints.value[i]
+    if (isShowControl.value ) {
+        if (isLineMousedown.value) {
+            // 判断控制点在那条线段上
+            const i = segmentIndex.value;
+            if (i === -1) return 
+            if (!isInsert.value) {
+                previewPoints.value.splice(i, 0, {
+                    x: offsetX,
+                    y: offsetY
+                })
+                isInsert.value = true
+            } else {
+                const target = previewPoints.value[i]
+                target.x = offsetX
+                target.y = offsetY
+            }
+            previewPath.value = updatePreviewPath(previewPoints.value)
+        } else if (isControlMousedown.value) {
+            const target = previewPoints.value[controlIndex.value]
             target.x = offsetX
             target.y = offsetY
+            previewPath.value = updatePreviewPath(previewPoints.value)
         }
-        previewPath.value = updatePreviewPath(previewPoints.value)
-        console.log('offsetX, offsetY:',offsetX, offsetY, previewPath.value)
-
     }
 }
 
 const handleMouseup = () => {
-    if (isShowControl.value && controlPoint.value) {
-        controlPoint.value = null
-        previewPath.value = ''
-        points.value = cloneDeep(previewPoints.value)
+    controlPoint.value = null
+    previewPath.value = ''
+    points.value = cloneDeep(previewPoints.value)
+    isInsert.value = false
+    isLineMousedown.value = false
+    isControlMousedown.value = false
+    if (isShowControl.value) {
         originPath.value = updatePreviewPath(points.value)
-        isInsert.value = false
     }
 }
 
@@ -123,11 +139,11 @@ onMounted(()=> {
 })
 </script>
 <template>
-  <div style="position: relative;" @click="handleWrapperClick" @mousemove="handleMousemove" @mouseup="handleMouseup">
+  <div style="position: relative;" @mousedown="handleWrapperClick" @mousemove="handleMousemove" @mouseup="handleMouseup">
     <!-- 展示层 -->
     <svg width="500" height="500">
-        <g  @click="handleLine">
-            <path :d="originPath" fill="none" stroke="black"  stroke-width="2"/>
+        <g  @mousedown="handleLine" >
+            <path :d="originPath" fill="none" stroke="black"  stroke-width="2" shape-rendering="geometricPrecision"/>
             <!-- 增加点击范围，不展示 -->
             <path :d="originPath" fill="none"  stroke="transparent" stroke-width="10" />
         </g>
@@ -135,11 +151,11 @@ onMounted(()=> {
     <!-- 交互层 -->
     <svg width="500" height="500" style="position: absolute;top:0px;left: 0px;pointer-events: none;">
         <g v-show="isShowControl" style="pointer-events: all;">
-            <rect v-for="point in points" :key="point.x + '' + point.y" :x="point.x" :y="point.y" width="6" height="6"
-             style="transform: translate(-3px,-3px);cursor: crosshair;" fill="black"></rect>
+            <rect v-for="(point,index) in points" :key="point.x + '' + point.y" :x="point.x" :y="point.y" width="6" height="6"
+             style="transform: translate(-3px,-3px);cursor: crosshair;" fill="black" @mousedown="handleControlMousedown($event,index)"></rect>
         </g>
         <g  v-show="previewPath" style="pointer-events: none;">
-           <path  :d="previewPath" fill="none" stroke="#666" stroke-width="2" ></path>
+           <path  :d="previewPath" fill="none" stroke="#666" stroke-width="2"  shape-rendering="geometricPrecision"></path>
         </g>
     </svg>
   </div>
