@@ -33,6 +33,36 @@ const addImage = (path) => {
     img.src = path
   })
 }
+
+/**
+ * 绘制旋转的图片
+ * centerX 未旋转 x 位置
+ * centerY 未旋转 y 位置
+ * angleInRadians 旋转角度
+ * targetWidth 绘制图片宽
+ * targetHeight 高
+ */
+const drawImageWidthAngle = (ctx,img, centerX, centerY, angleInRadians, targetWidth, targetHeight) => {
+ // 保存原始未变换的状态
+  ctx.save();
+  // 移动坐标系到图片的中心点，这样旋转会以图片中心为基准
+  var halfWidth = targetWidth / 2;
+  var halfHeight = targetHeight / 2;
+  ctx.translate(centerX + halfWidth, centerY + halfHeight);
+
+  // 旋转60度
+  ctx.rotate(angleInRadians);
+
+  // 计算旋转后图片四个角的新坐标，但由于我们已经移动到中心，只需要计算偏移量
+  var offsetX = -halfWidth;
+  var offsetY = -halfHeight;
+
+  // 使用旋转后的新坐标绘制图片
+  ctx.drawImage(img, offsetX, offsetY, targetWidth, targetHeight);
+
+  // 恢复到旋转之前的坐标系状态
+  ctx.restore();
+}
 const loadImage = async (e) => {
     const ctx = canvas.value.getContext('2d')
     const {offsetWidth, offsetHeight } = img.value
@@ -49,14 +79,19 @@ const loadImage = async (e) => {
     // 设置设备像素比
     ctx.scale(dpr,dpr)
     ctx.drawImage(img.value, 0, 0, offsetWidth, offsetHeight)
+
+    // 保存当前画布状态
+    // ctx.save()
     const shuiguoImg = await addImage('../public/shuiguo.png')
     const { width:sgWidth, height:sgHeight } = shuiguoImg
     const targetWidth = 100
     const rate = sgWidth / sgHeight
     const targetHeight = targetWidth / rate
-    ctx.drawImage(shuiguoImg, 0, 0, targetWidth, targetHeight)
-
+    drawImageWidthAngle(ctx, shuiguoImg, 120, 0, Math.PI / 3, targetWidth, targetHeight)
+    drawImageWidthAngle(ctx, shuiguoImg, -20, 0, -Math.PI / 3, targetWidth, targetHeight)
 }
+
+
 
 
 
